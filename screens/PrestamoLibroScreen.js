@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, Text, VStack } from "native-base";
-import { StyleSheet, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import Picker from "../components/Picker";
 import Toast from 'react-native-toast-message';
-import axios from 'axios';
+import axios from "axios";
 
-export default function RegistrarEntradaScreen({ route, navigation }) {
+export default function PrestamoLibroScreen({ route, navigation }) {
   const [tipo, setTipo] = useState(null);
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerItems, setPickerItems] = useState([
@@ -19,54 +19,29 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
   ]);
   const [nombre, setNombre] = useState('');
   const [informacion, setInformacion] = useState('');
-
-  useEffect(() => {
-    if (route.params?.scanned) {
-      navigation.setParams({scanned: null})
-      axios({
-        method: 'post',
-        url: 'http://192.168.144.64:900/api/alumno',
-        data: {
-          matricula: route.params.scanned
-        }
-      })
-      .then(function (response) {
-        const { data } = response;
-        if (data.success === 1) {
-          if (data.result) {
-            Toast.show({ type: 'success', text1: 'Éxito', text2: 'Código escaneado' });
-            setNombre(data.result.nombre);
-            setInformacion(data.result.carrera);
-          } else {
-            Toast.show({ type: 'error', text1: 'Error', text2: 'El alumno no fue encontrado' });
-          }
-        }
-      })
-      .catch(err => {
-        Toast.show({ type: 'error', text1: 'ERROR', text2: 'Hay problemas en la red' });
-      });
-    }
-  }, [route.params?.scanned]);
+  const [libro, setLibro] = useState('');
 
   const handleClickRegistrar = () => {
     if (!tipo) return Toast.show({ type: 'error', text1: 'Error',  text2: 'Selecciona el tipo de usuario' });
     if (nombre.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa el nombre' });
-    if (tipo != 3 && informacion.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa la carrera' });
+    if (informacion.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa la carrera' });
+    if (libro.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa el libro' });
     axios({
       method: 'post',
-      url: 'http://192.168.101.77:900/api/registrar-entrada',
+      url: 'http://192.168.101.77:900/api/registrar-prestamo-libro',
       data: {  
         nombre: nombre.trim(),
         informacion: informacion.trim(),
         tipo,
+        libro,
       }
     })
     .then(({ data }) => {
       if (data.success === 1) {
-        Toast.show({ type: 'success', text1: 'Éxito',  text2: 'Entrada registrada con éxito' });
+        Toast.show({ type: 'success', text1: 'Éxito',  text2: data.message || 'Prestamo registrado con éxito' });
         navigation.goBack();
       }
-      else Toast.show({ type: 'error', text1: 'Error',  text2: 'Error al registrar la entrada' });
+      else Toast.show({ type: 'error', text1: 'Error',  text2: data.message || 'Error al registrar el prestamo' });
     })
     .catch(err => {
       Toast.show({ type: 'error', text1: 'ERROR', text2: 'Hay problemas en la red' });
@@ -77,7 +52,7 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
     <SafeAreaView style={{flex: 1}}>
       <Box paddingX={7} flex={1} flexGrow={1}>
         <Box marginX={-3} marginTop={10} marginBottom={20} justifyContent="center">
-          <Text fontSize={22} fontWeight="700" textAlign="center">Registrar Entrada</Text>
+          <Text fontSize={22} fontWeight="700" textAlign="center">Prestamo Libro</Text>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.backButton} activeOpacity={0.6}>
@@ -85,7 +60,7 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
           </TouchableOpacity>
         </Box>
         <VStack space={5}>
-          <Picker
+        <Picker
             placeholder="Tipo de usuario"
             open={pickerOpen}
             value={tipo}
@@ -94,12 +69,6 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
             setValue={setTipo}
             setItems={setPickerItems}
           />
-          {tipo === 1 ?
-            <Button
-              onPress={() => navigation.navigate("Escaner")}
-              label="Escanear"
-            />
-          : null}
           <TextInput
             placeholder="Nombre..."
             value={nombre}
@@ -110,11 +79,17 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
             value={informacion}
             onChangeText={text => setInformacion(text)}
           />
+          <TextInput
+            placeholder="Código del Libro..."            
+            value={libro}
+            onChangeText={text => setLibro(text)}
+            keyboardType="decimal-pad"
+          />
         </VStack>
         <Box flex={1} justifyContent="flex-end" marginBottom={10}>
           <Button
-            onPress={handleClickRegistrar}
             label="Registrar"
+            onPress={handleClickRegistrar}
           />
         </Box>
       </Box>

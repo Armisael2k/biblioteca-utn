@@ -13,12 +13,15 @@ export default function Welcome({ navigation }) {
             <Button
               onPress={() => navigation.navigate("RegistrarEntrada")}
               label="Registrar entrada"
+             />
+            <Button
+              onPress={() => navigation.navigate("PrestamoComputadora")}
+              label="Préstamo de PC"
               />
             <Button
-              
-              label="Prestamo de PC"
-              />
-            <Button label="Préstamo de libro"/>
+              onPress={() => navigation.navigate("PrestamoLibro")}
+              label="Préstamo de libro"
+            />
           </VStack>
         </Box>
       </Box>

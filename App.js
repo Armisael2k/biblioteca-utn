@@ -1,9 +1,11 @@
-import { NativeBaseProvider } from "native-base";
+import { NativeBaseProvider } from 'native-base';
 import Toast, { BaseToast } from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import InicioScreen from './screens/InicioScreen';
 import RegistrarEntradaScreen from './screens/RegistrarEntradaScreen';
+import PrestamoComputadoraScreen from './screens/PrestamoComputadoraScreen';
+import PrestamoLibroScreen from './screens/PrestamoLibroScreen';
 import EscanerModal from "./modals/EscanerModal";
 
 const Stack = createStackNavigator();
@@ -55,6 +57,8 @@ export default function App() {
           <Stack.Group>
             <Stack.Screen name="Inicio" component={InicioScreen} />
             <Stack.Screen name="RegistrarEntrada" component={RegistrarEntradaScreen} />
+            <Stack.Screen name="PrestamoComputadora" component={PrestamoComputadoraScreen} />
+            <Stack.Screen name="PrestamoLibro" component={PrestamoLibroScreen} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="Escaner" component={EscanerModal} />
