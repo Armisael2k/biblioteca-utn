@@ -7,6 +7,7 @@ import TextInput from "../components/TextInput";
 import Button from "../components/Button";
 import Toast from 'react-native-toast-message';
 import axios from "axios";
+import { ip } from "../globals";
 
 
 export default function PrestamoComputadoraScreen({ route, navigation }) {
@@ -22,7 +23,7 @@ export default function PrestamoComputadoraScreen({ route, navigation }) {
     if (computadora.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa el No. computadora' });
     axios({
       method: 'post',
-      url: 'http://192.168.101.77:900/api/registrar-prestamo-computadora',
+      url: `http://${ip}/api/registrar-prestamo-computadora`,
       data: {  
         nombre: nombre.trim(),
         carrera: carrera.trim(),

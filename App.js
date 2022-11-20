@@ -6,6 +6,7 @@ import InicioScreen from './screens/InicioScreen';
 import RegistrarEntradaScreen from './screens/RegistrarEntradaScreen';
 import PrestamoComputadoraScreen from './screens/PrestamoComputadoraScreen';
 import PrestamoLibroScreen from './screens/PrestamoLibroScreen';
+import DevolucionLibroScreen from './screens/DevolucionLibroScreen';
 import EscanerModal from "./modals/EscanerModal";
 
 const Stack = createStackNavigator();
@@ -59,6 +60,7 @@ export default function App() {
             <Stack.Screen name="RegistrarEntrada" component={RegistrarEntradaScreen} />
             <Stack.Screen name="PrestamoComputadora" component={PrestamoComputadoraScreen} />
             <Stack.Screen name="PrestamoLibro" component={PrestamoLibroScreen} />
+            <Stack.Screen name="DevolucionLibro" component={DevolucionLibroScreen} />
           </Stack.Group>
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="Escaner" component={EscanerModal} />

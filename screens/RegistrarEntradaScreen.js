@@ -8,6 +8,8 @@ import Button from "../components/Button";
 import Picker from "../components/Picker";
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
+import { ip } from "../globals";
+
 
 export default function RegistrarEntradaScreen({ route, navigation }) {
   const [tipo, setTipo] = useState(null);
@@ -25,7 +27,7 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
       navigation.setParams({scanned: null})
       axios({
         method: 'post',
-        url: 'http://192.168.144.64:900/api/alumno',
+        url: `http://${ip}/api/alumno`,
         data: {
           matricula: route.params.scanned
         }
@@ -54,7 +56,7 @@ export default function RegistrarEntradaScreen({ route, navigation }) {
     if (tipo != 3 && informacion.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa la carrera' });
     axios({
       method: 'post',
-      url: 'http://192.168.101.77:900/api/registrar-entrada',
+      url: `http://${ip}/api/registrar-entrada`,
       data: {  
         nombre: nombre.trim(),
         informacion: informacion.trim(),

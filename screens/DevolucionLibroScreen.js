@@ -5,41 +5,25 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import TextInput from "../components/TextInput";
 import Button from "../components/Button";
-import Picker from "../components/Picker";
 import Toast from 'react-native-toast-message';
 import axios from "axios";
 import { ip } from "../globals";
 
-export default function PrestamoLibroScreen({ route, navigation }) {
-  const [tipo, setTipo] = useState(null);
-  const [pickerOpen, setPickerOpen] = useState(false);
-  const [pickerItems, setPickerItems] = useState([
-    {label: 'Alumno', value: 1},
-    {label: 'Docente', value: 2},
-    {label: 'Externo', value: 3}
-  ]);
-  const [nombre, setNombre] = useState('');
-  const [informacion, setInformacion] = useState('');
+export default function DevolucionLibroScreen({ route, navigation }) {
   const [libro, setLibro] = useState('');
 
   const handleClickRegistrar = () => {
-    if (!tipo) return Toast.show({ type: 'error', text1: 'Error',  text2: 'Selecciona el tipo de usuario' });
-    if (nombre.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa el nombre' });
-    if (informacion.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa la carrera' });
     if (libro.trim() == '') return Toast.show({ type: 'error', text1: 'Error',  text2: 'Ingresa el libro' });
     axios({
       method: 'post',
-      url: `http://${ip}/api/registrar-prestamo-libro`,
+      url: `http://${ip}/api/registrar-devolucion-libro`,
       data: {  
-        nombre: nombre.trim(),
-        informacion: informacion.trim(),
-        tipo,
         libro,
       }
     })
     .then(({ data }) => {
       if (data.success === 1) {
-        Toast.show({ type: 'success', text1: 'Éxito',  text2: data.message || 'Prestamo registrado con éxito' });
+        Toast.show({ type: 'success', text1: 'Éxito',  text2: data.message || 'Devolución registrada con éxito' });
         navigation.goBack();
       }
       else Toast.show({ type: 'error', text1: 'Error',  text2: data.message || 'Error al registrar el prestamo' });
@@ -61,25 +45,6 @@ export default function PrestamoLibroScreen({ route, navigation }) {
           </TouchableOpacity>
         </Box>
         <VStack space={5}>
-          <Picker
-            placeholder="Tipo de usuario"
-            open={pickerOpen}
-            value={tipo}
-            items={pickerItems}
-            setOpen={setPickerOpen}
-            setValue={setTipo}
-            setItems={setPickerItems}
-          />
-          <TextInput
-            placeholder="Nombre..."
-            value={nombre}
-            onChangeText={text => setNombre(text)}
-          />
-          <TextInput
-            placeholder={tipo === 3 ? 'Información...' : 'Carrera'}
-            value={informacion}
-            onChangeText={text => setInformacion(text)}
-          />
           <TextInput
             placeholder="Código del Libro..."            
             value={libro}
@@ -89,7 +54,7 @@ export default function PrestamoLibroScreen({ route, navigation }) {
         </VStack>
         <Box flex={1} justifyContent="flex-end" marginBottom={10}>
           <Button
-            label="Registrar"
+            label="Registrar Devolución"
             onPress={handleClickRegistrar}
           />
         </Box>

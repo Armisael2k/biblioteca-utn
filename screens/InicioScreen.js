@@ -22,6 +22,10 @@ export default function Welcome({ navigation }) {
               onPress={() => navigation.navigate("PrestamoLibro")}
               label="Préstamo de libro"
             />
+            <Button
+              onPress={() => navigation.navigate("DevolucionLibro")}
+              label="Devolución de libro"
+            />
           </VStack>
         </Box>
       </Box>
