@@ -1,25 +1,25 @@
 CREATE TABLE IF NOT EXISTS carreras
 (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre varchar(255) NOT NULL
+    nombre varchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS informaciones
 (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre varchar(255) NOT NULL
+    nombre varchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS grupos
 (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre varchar(255) NOT NULL
+    nombre varchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS usuarios
 (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    nombre varchar(255) NOT NULL
+    nombre varchar(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE IF NOT EXISTS alumnos
@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS prestamos_computadoras
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
     id_usuario int(11) NOT NULL,
     id_informacion int(11) NOT NULL,
+    numero int(11) NOT NULL,
     tipo int(1) NOT NULL,
     fecha datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
@@ -75,10 +76,13 @@ CREATE TABLE IF NOT EXISTS prestamos
 CREATE TABLE IF NOT EXISTS registros_libros
 (
     id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    id_alumno int(11) NOT NULL,
+    id_usuario int(11) NOT NULL,
     id_libro int(11) NOT NULL,
+    id_informacion int(11) NOT NULL,
     tipo int(1) NOT NULL,
+    movimiento int(1) NOT NULL,
     fecha datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_alumno) REFERENCES alumnos(id),
-    FOREIGN KEY (id_libro) REFERENCES libros(id)
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id),
+    FOREIGN KEY (id_libro) REFERENCES libros(id),
+    FOREIGN KEY (id_informacion) REFERENCES informaciones(id)
 );

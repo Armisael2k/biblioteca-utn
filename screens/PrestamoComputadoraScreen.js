@@ -32,10 +32,10 @@ export default function PrestamoComputadoraScreen({ route, navigation }) {
       }
     }).then(({ data }) => {
       if (data.success === 1) {
-        Toast.show({ type: 'success', text1: 'Éxito',  text2: 'Entrada registrada con éxito' });
+        Toast.show({ type: 'success', text1: 'Éxito',  text2: 'Préstamo registrado con éxito' });
         navigation.goBack();
       }
-      else Toast.show({ type: 'error', text1: 'Error',  text2: 'Error al registrar la entrada' });
+      else Toast.show({ type: 'error', text1: 'Error',  text2: 'Error al registrar el préstamo' });
     }).catch(err => {
       Toast.show({ type: 'error', text1: 'ERROR', text2: 'Hay problemas en la red' });
     })
