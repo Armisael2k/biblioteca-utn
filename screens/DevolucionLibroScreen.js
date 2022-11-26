@@ -37,7 +37,7 @@ export default function DevolucionLibroScreen({ route, navigation }) {
     <SafeAreaView style={{flex: 1}}>
       <Box paddingX={7} flex={1} flexGrow={1}>
         <Box marginX={-3} marginTop={10} marginBottom={20} justifyContent="center">
-          <Text fontSize={22} fontWeight="700" textAlign="center">Prestamo Libro</Text>
+          <Text fontSize={22} fontWeight="700" textAlign="center">Devolución Libro</Text>
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             style={styles.backButton} activeOpacity={0.6}>

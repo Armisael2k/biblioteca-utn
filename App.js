@@ -13,13 +13,14 @@ const Stack = createStackNavigator();
 
 const toastTextStyle = {
   text1Style: {
-    fontSize: 20,
+    fontSize: 15,
   },
   text2Style: {
-    fontSize: 17,
+    fontSize: 15,
     color: '#5B5B5B',
     fontWeight: '500'
-  }
+  },
+  text2NumberOfLines: 0
 }
 
 const toastConfig = {
